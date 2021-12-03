@@ -25,16 +25,15 @@ const ListButton = ({ title, navigation }) => {
 const HomeScreen = ({ navigation }) => {
   const [NotFound, setNotFound] = useState(true);
   const [latestNews, setLatestNews] = useState([]);
-  const [dailyNews, setDailyNews] = useState("");
-  const [isSelected, setSelection] = useState(false);
-  const [endPoint, setEndPoint] = useState("");
-  const [titleText, setTitleText] = useState("Top-headlines");
+  const [titleText, setTitleText] = useState("");
   const [sourceUpdate, setSourceUpdate] = useState("");
-  const [isChecked, setChecked] = useState(false);
   const api_key = "30f49487e11948618f1ffd82b5be808e";
-
+  const [endPoint, setEndPoint] = useState();
+  const onPressTop = () => {
+    setTitleText(titleText + "everything");
+  };
   const fetchData = () => {
-    fetch("https://newsapi.org/v2/top-headlines?country=us&apiKey=" + api_key)
+    fetch("https://newsapi.org/v2/everything?q=s&apiKey=" + api_key)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -47,7 +46,9 @@ const HomeScreen = ({ navigation }) => {
   };
   const fetchSourceData = () => {
     fetch(
-      "https://newsapi.org/v2/top-headlines?sources=" +
+      "https://newsapi.org/v2/" +
+        titleText +
+        "?q=" +
         sourceUpdate +
         "&apiKey=" +
         api_key
@@ -63,25 +64,29 @@ const HomeScreen = ({ navigation }) => {
       .finally(() => setNotFound(false));
   };
   useEffect(() => {
+    onPressTop();
     fetchData();
+   
   }, []);
 
   const onPressEverything = () => {
     setTitleText("everything");
   };
 
-  const onPressTop = () => {
-    setTitleText("top-headlines");
-  };
   return (
     <View style={styles.container}>
       <View>
-        <TouchableOpacity>
-        <Text style={{ color: "white", padding: 10, backgroundColor: "#f0b71c" }}>
-          Everything
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            onPressTop();
+          }}
+        >
+          <Text
+            style={{ color: "white", padding: 10, backgroundColor: "#f0b71c" }}
+          >
+            Everything
+          </Text>
         </TouchableOpacity>
-
       </View>
       <View style={styles.searchView}>
         <TextInput
@@ -206,10 +211,9 @@ const styles = StyleSheet.create({
     margin: 8,
   },
   section: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
-
 });
 
 export default HomeScreen;
