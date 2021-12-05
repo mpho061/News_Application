@@ -25,8 +25,7 @@ const ListButton = ({ title, navigation }) => {
 const HomeScreen = ({ navigation }) => {
   const [NotFound, setNotFound] = useState(true);
   const [latestNews, setLatestNews] = useState([]);
-  const [titleText, setTitleText] = useState("top-headlines");
-  const [sourceUpdate, setSourceUpdate] = useState("top-headlines");
+  const [titleText, setTitleText] = useState("everything");
   const api_key = "30f49487e11948618f1ffd82b5be808e";
   const [endPoint, setEndPoint] = useState();
   
@@ -42,30 +41,9 @@ const HomeScreen = ({ navigation }) => {
       })
       .finally(() => setNotFound(false));
   };
-  const fetchSourceData = () => {
-    fetch(
-      "https://newsapi.org/v2/" +
-        titleText +
-        "?q=" +
-        sourceUpdate +
-        "&apiKey=" +
-        api_key
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setLatestNews(data.articles);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => setNotFound(false));
-  };
- 
+
   useEffect(() => {
-    // onPressTop();
     fetchData();
-   
   }, []); 
 
   return (

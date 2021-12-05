@@ -19,7 +19,7 @@ const News = ({ route, navigation }) => {
   const [PerNews, setPerNews] = useState([]);
   const [dailyNews, setDailyNews] = useState("");
   const [titleText, setTitleText] = useState("Top-headlines");
-  
+
   const api_key = "30f49487e11948618f1ffd82b5be808e";
 
   const fetchData = () => {

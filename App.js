@@ -7,6 +7,8 @@ import HomeScreen from './components/HomeScreen';
 import News from './components/News';
 import WebViewComponent from './components/WebView';
 import NewsSource from './components/NewsSource';
+import WelcomeScreen from './components/WelcomeScreen';
+import HomeScreen2 from './components/HomeScreen2';
  
 
 const Stack = createNativeStackNavigator();
@@ -15,10 +17,13 @@ export default function App() {
   return (
      <NavigationContainer>
        <Stack.Navigator>
-         <Stack.Screen name="Trending News" component={HomeScreen} options={{headerShown:false}}/>
+         <Stack.Screen name="Welcome Screen" component={WelcomeScreen} options={{headerShown:false}}/>
+         <Stack.Screen name="Trending News" component={HomeScreen} options={{headerShown:true}}/>
+         <Stack.Screen name="Trending news" component={HomeScreen2} options={{headerShown:true}}/>
          <Stack.Screen name="News" component={News} options={({route})=>{
           return({
-            title: route.params.title 
+            title: route.params.title,
+      
           })
         }}/>
         <Stack.Screen name="WebViews" component={WebViewComponent}/>
@@ -33,5 +38,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
 });
